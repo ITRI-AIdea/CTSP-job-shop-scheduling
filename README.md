@@ -1,15 +1,15 @@
-##需求：
+## 需求：
 * pandas
 * numpy
 * 下載資料中的 jobs.json 複製於執行目錄
 
-##用法：
+## 用法：
 
 `python3 validator.py [submit_file]`
 
 submit_file: 未指定時，預設 submit.json
 
-##錯誤解說：
+## 錯誤解說：
  * `submit column mismatch`: submit 格式錯誤
  * `submit find invalid columns`: submit 格式錯誤
  * `submit find 1613/1614 operations.`: 預期工序數不足，本次題目，答案需包含 1614 件工序。
