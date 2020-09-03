@@ -52,5 +52,7 @@ if __name__ == '__main__':
         sys.exit(-1)
     ok, msg = validator.check(js)
     if not ok:
-        print(msg)
-    print('check ok.')
+        for l in msg:
+            print(l)
+    else:
+        print('check ok.')

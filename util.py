@@ -16,6 +16,7 @@ from typing import Tuple, Any
 from bisect import bisect
 
 import json
+from pprint import pprint
 from datetime import datetime, timedelta
 from dateutil import parser
 
@@ -626,7 +627,7 @@ def check_op_time(cf, early_stop=False):
 
             days_diff = calc_diff_fullday(rc, dt_start_u, dt_end_u)
             if days_diff < _days:
-                errors.append(time_op_raw)
+                # errors.append(time_op_raw)
                 msg = f"not enough time {str(r.to_dict())}"
                 if early_stop:
                     return False, msg
@@ -847,32 +848,36 @@ def prepare(cf, submit):
 
 
 def check(cf):
+    errs = []
     ok, err = check_orders(cf, False)
     if not ok:
-        print(err)
+        errs += err
         # return ok, err
     ok, err = check_product_op_count(cf, False)
     if not ok:
-        print(err)
+        errs += err
         # return ok, err
     ok, err = check_notBefore(cf, False)
     if not ok:
-        print(err)
+        errs += err
         # return ok, err
     ok, err = check_op_time(cf, False)
     if not ok:
-        print(err)
+        errs += err
         # return ok, err
     ok, err = check_overlap_inside_product(cf, False)
     if not ok:
-        print(err)
+        errs += err
         # return ok, err
 
     ok, err = check_rc_usage(cf, False)
     if not ok:
-        print(err)
+        errs += err
         # return ok, err
-    return True, 'OK'
+    if errs:
+        return False, errs
+    else:
+        return True, ['OK']
 
 
 def check_notBefore(cf, early_stop=False):
